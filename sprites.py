@@ -551,9 +551,11 @@ class Player(pygame.sprite.Sprite):
         elif lt >= 0.3 and not self.is_player1 and self.wall_materials >= 2:
             self.wall_materials -= 2
 
+            # Does the X, y using integer division to snap it to a grid (puts it to the middle of the block not any other place)
             center_x = (self.game.pointer2.rect.centerx // GRID_SIZE)
             center_y = (self.game.pointer2.rect.centery // GRID_SIZE)
 
+            # makes the center
             center_x = (center_x * GRID_SIZE) + WALL_WIDTH / 2
             center_y = (center_y * GRID_SIZE) + WALL_HEIGHT / 2
 
@@ -579,15 +581,15 @@ class Player(pygame.sprite.Sprite):
 
         # Player 2 breaking walls
         elif a_pressed and not self.is_player1:
-            center_x = (self.game.pointer1.rect.centerx // GRID_SIZE)
-            center_y = (self.game.pointer1.rect.centery // GRID_SIZE)
+            center_x = (self.game.pointer2.rect.centerx // GRID_SIZE)
+            center_y = (self.game.pointer2.rect.centery // GRID_SIZE)
 
             center_x = (center_x * GRID_SIZE) + WALL_WIDTH / 2
             center_y = (center_y * GRID_SIZE) + WALL_HEIGHT / 2
 
             breaker = Breaker(center_x, center_y, False, self.game)
             self.game.all_breakers.add(breaker)
-            # self.game.all_sprites.add(breaker)
+            self.game.all_sprites.add(breaker)
 
     # Player collisions
     def collision(self):
@@ -769,7 +771,7 @@ class Breaker(pygame.sprite.Sprite):
         self.image.set_alpha(0)  # Makes the sprite invis
         self.rect = self.image.get_rect()
         self.rect.center = x, y
-        self.is_player1 = is_player1
+        self.is_player1 = False
         self.game = game
 
     # does collisions and removes sprite
@@ -791,6 +793,7 @@ class Breaker(pygame.sprite.Sprite):
                     self.game.player1.wall_materials += 1
                 else:
                     self.game.player2.wall_materials += 1
+
 
 
             else:
