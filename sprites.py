@@ -771,7 +771,7 @@ class Breaker(pygame.sprite.Sprite):
         self.image.set_alpha(0)  # Makes the sprite invis
         self.rect = self.image.get_rect()
         self.rect.center = x, y
-        self.is_player1 = False
+        self.is_player1 = is_player1
         self.game = game
 
     # does collisions and removes sprite
